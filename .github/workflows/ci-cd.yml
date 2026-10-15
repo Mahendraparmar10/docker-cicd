@@ -1,0 +1,69 @@
+
+name: Docker Compose CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build and Test Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose
+        run: docker compose config
+
+      - name: Build Docker Images
+        run: docker compose build
+
+      - name: Start Containers
+        run: docker compose up -d
+
+      - name: Check Container Status
+        run: docker compose ps
+
+      - name: Test Backend Health
+        run: |
+          for i in {1..15}; do
+            if docker compose exec -T backend node -e \
+              "require('http').get('http://127.0.0.1:3000/health', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
+            then
+              echo "Backend health check passed"
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "Backend health check failed"
+          docker compose logs
+          exit 1
+
+      - name: Test Frontend to Backend Connection
+        run: |
+          for i in {1..15}; do
+            if curl -fsS http://localhost:8080/api/hello \
+              | grep -q "Hello from the backend"; then
+              echo "Frontend-to-backend test passed"
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "Integration test failed"
+          docker compose logs
+          exit 1
+
+      - name: Stop Containers
+        if: always()
+        run: docker compose down

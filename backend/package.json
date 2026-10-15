@@ -1,0 +1,14 @@
+
+{
+  "name": "docker-cicd-backend",
+  "version": "1.0.0",
+  "description": "Backend for Docker CI/CD demo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --check server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
