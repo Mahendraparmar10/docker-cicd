@@ -1,0 +1,5 @@
+aws-terraform-deployment/.git/
+aws-terraform-deployment/.terraform/
+aws-terraform-deployment/terraform.tfstate
+aws-terraform-deployment/terraform.tfstate.*
+aws-terraform-deployment/terraform.tfvars

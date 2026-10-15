@@ -1,0 +1,12 @@
+aws-terraform-deployment/.terraform/
+aws-terraform-deployment/*.tfstate
+aws-terraform-deployment/*.tfstate.*
+aws-terraform-deployment/terraform.tfvars
+aws-terraform-deployment/.terraform/
+aws-terraform-deployment/*.tfstate
+aws-terraform-deployment/*.tfstate.*
+aws-terraform-deployment/terraform.tfvars
+aws-terraform-deployment/.terraform/
+aws-terraform-deployment/*.tfstate
+aws-terraform-deployment/*.tfstate.*
+aws-terraform-deployment/terraform.tfvars
